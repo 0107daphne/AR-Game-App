@@ -15,16 +15,13 @@ public class GameManager : MonoBehaviour
     private List<int> playerSequenceList = new List<int>();
     public List<AudioClip> buttonSoundsList = new List<AudioClip>();
     public List<List<Color32>> buttonColors = new List<List<Color32>>();
-    public List<Button> clickableButtons;
+    //public List<Button> clickableButtons;
     public List<GameObject> clickableCubes;
     public AudioClip loseSound;
     public AudioSource audioSource;
-    public CanvasGroup buttons;
+    //public CanvasGroup buttons;
     public GameObject startButton;
     public TMP_Text console;
-    public TMP_Text console1;
-    public TMP_Text console2;
-    public TMP_Text console3;
     public void Awake()
     {
         
@@ -37,7 +34,8 @@ public class GameManager : MonoBehaviour
         //setting the color of the buttons
         for(int i=0; i<4; i++)
         {
-            clickableButtons[i].GetComponent<Image>().color = buttonColors[i][0];
+            //clickableButtons[i].GetComponent<Image>().color = buttonColors[i][0];
+            clickableCubes[i].GetComponent<MeshRenderer>().material.color = buttonColors[i][0];
         }
     }
 
@@ -82,10 +80,12 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator HighlightButton(int buttonId)
     {
-        clickableButtons[buttonId].GetComponent<Image>().color = buttonColors[buttonId][1];
+        //clickableButtons[buttonId].GetComponent<Image>().color = buttonColors[buttonId][1];
+        clickableCubes[buttonId].GetComponent<MeshRenderer>().material.color = buttonColors[buttonId][1];
         audioSource.PlayOneShot(buttonSoundsList[buttonId]);
         yield return new WaitForSeconds(0.5f);
-        clickableButtons[buttonId].GetComponent<Image>().color = buttonColors[buttonId][0];
+        //clickableButtons[buttonId].GetComponent<Image>().color = buttonColors[buttonId][0];
+        clickableCubes[buttonId].GetComponent<MeshRenderer>().material.color = buttonColors[buttonId][0];
     }
 
     public IEnumerator PlayerLost()
@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator StartNextRound()
     {
         playerSequenceList.Clear();
-        buttons.interactable = false;
+        //buttons.interactable = false;
         yield return new WaitForSeconds(1f);
         playerTaskList.Add(Random.Range(0,4));
         console.text="Level " + (playerTaskList.Count); // Display the current level
@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
         {
             yield return StartCoroutine(HighlightButton(index));
         }
-        buttons.interactable = true;
+        //buttons.interactable = true;
         yield return null;
     }
 
