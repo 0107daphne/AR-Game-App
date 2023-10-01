@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DevAccountEmail: 0107daph@gmail.com
   DevAccountToken: 4gktfw3zqjjgbbbfuwo748fsifaz1ina16jf1w8a9xc39bsmupyx861gakk1yxccw4srhqwrb6nnjd9z8thseq6jjebdwr395xmz1tptht9rmzf8mph3z6tc4rn5xmxuaapn1cnxi1wjcyk4q9xb4goqj5aiueguc1a8iqdadb37eqnzsaye77fjariygtjj98kzb8ox
-  SelectedStudio: 
-  SdkPath: 
+  SelectedStudio: AR Game
+  SdkPath: Assets/PlayFabSDK
   EdExPath: 
   LocalCloudScriptPath: 
   PanelIsShown: 0
-  curMainMenuIdx: 0
+  curMainMenuIdx: 1
   curSubMenuIdx: 0
