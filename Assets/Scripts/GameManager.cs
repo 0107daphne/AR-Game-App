@@ -63,8 +63,7 @@ public class GameManager : MonoBehaviour
         //if everything is correclty pressed/remembered then a new sequence can begin
         if(playerSequenceList.Count == playerTaskList.Count)
         {
-            //ScoreManager.instance.AddPoint();
-            //console1.text="Good job! Next level";
+            ScoreManager.instance.AddPoint();
             console.text="Good job! Next level";
             StartCoroutine(StartNextRound());
         }
@@ -72,7 +71,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        //ScoreManager.instance.Restart();
+        ScoreManager.instance.Restart();
         StartCoroutine(StartNextRound());
         startButton.SetActive(false);
         console.text="Get ready!";
