@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     //public CanvasGroup buttons;
     public GameObject startButton;
     public TMP_Text console;
+    public GameObject leaderboardbtn;
     public void Awake()
     {
         
@@ -53,9 +54,10 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                //console2.text="You Lost. I am disappointed.";
-                console.text="You Lost. I am disappointed.";
+                console.text="Game Over";
+                ScoreManager.instance.GameOver();
                 StartCoroutine(PlayerLost());
+                leaderboardbtn.SetActive(true);
                 return;
             }
             
