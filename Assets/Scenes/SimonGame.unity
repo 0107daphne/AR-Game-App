@@ -2784,7 +2784,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Leaderboard
+  m_text: Save score
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5d63fcfbf3774a64688e161a4f36305c, type: 2}
   m_sharedMaterial: {fileID: -412509466699233635, guid: 5d63fcfbf3774a64688e161a4f36305c,
@@ -3625,6 +3625,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9636d1e4a73c6844aa0ac81fa740631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rowPrefab: {fileID: 0}
+  rowsParent: {fileID: 0}
 --- !u!4 &2053144978
 Transform:
   m_ObjectHideFlags: 0
@@ -3726,8 +3728,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2053144977}
         m_TargetAssemblyTypeName: PlayfabManager, Assembly-CSharp
-        m_MethodName: GetLeaderboard
-        m_Mode: 1
+        m_MethodName: SendLeaderboard
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
