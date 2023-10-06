@@ -6,16 +6,72 @@ using UnityEngine.UI;
 using PlayFab;
 using PlayFab.ClientModels;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayfabManager : MonoBehaviour
 {
+    [Header("Login UI")]
+    public TMP_Text messageText;
+    public TMP_InputField emailInput;
+    public TMP_InputField passwordInput;
+
     [Header("Leaderboard")]
     public GameObject rowPrefab;
     public Transform rowsParent;
 
-    void Start()
+    [Header("Load Scene")]
+    public string sceneName;
+
+    // void Start()
+    // {
+    //     Login();
+    // }
+
+    public void RegisterButton()
     {
-        Login();
+        if(passwordInput.text.Length<6)
+        {
+            messageText.text="Password too short!";
+            return; //to stop the script here
+        }
+        var request = new RegisterPlayFabUserRequest
+        {
+            Email = emailInput.text,
+            Password = passwordInput.text,
+            RequireBothUsernameAndEmail = false
+        };
+        PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError);
+    }
+
+    void OnRegisterSuccess(RegisterPlayFabUserResult result)
+    {
+        messageText.text="Registered and Logged in!";
+        StartCoroutine(Wait());
+    }
+
+    public void LoginButton()
+    {
+        var request = new LoginWithEmailAddressRequest
+        {
+            Email=emailInput.text,
+            Password = passwordInput.text
+        };
+        PlayFabClientAPI.LoginWithEmailAddress(request, OnSuccess, OnError);
+    }
+
+    public void ResetPasswordButton()
+    {
+        var request = new SendAccountRecoveryEmailRequest
+        {
+            Email = emailInput.text,
+            TitleId = "99A42"
+        };
+        PlayFabClientAPI.SendAccountRecoveryEmail(request, OnPasswordReset,OnError);
+    }
+
+    void OnPasswordReset(SendAccountRecoveryEmailResult result)
+    {
+        messageText.text = "Password reset email sent!";
     }
 
     void Login()
@@ -30,13 +86,22 @@ public class PlayfabManager : MonoBehaviour
 
     void OnSuccess(LoginResult result)
     {
+        messageText.text = "Logging in!";
         Debug.Log("Successful login/account created");
+        StartCoroutine(Wait());
     }
 
     void OnError(PlayFabError error)
     {
+        messageText.text="Encountered an error!";
         Debug.Log("Error while logging in/creating account");
         Debug.Log(error.GenerateErrorReport());
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void SendLeaderboard(int score)
