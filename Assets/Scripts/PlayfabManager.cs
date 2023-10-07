@@ -74,15 +74,15 @@ public class PlayfabManager : MonoBehaviour
         messageText.text = "Password reset email sent!";
     }
 
-    void Login()
-    {
-        var request = new LoginWithCustomIDRequest
-        {
-            CustomId = SystemInfo.deviceUniqueIdentifier,
-            CreateAccount = true
-        };
-        PlayFabClientAPI.LoginWithCustomID(request, OnSuccess, OnError);
-    }
+    // void Login()
+    // {
+    //     var request = new LoginWithCustomIDRequest
+    //     {
+    //         CustomId = SystemInfo.deviceUniqueIdentifier,
+    //         CreateAccount = true
+    //     };
+    //     PlayFabClientAPI.LoginWithCustomID(request, OnSuccess, OnError);
+    // }
 
     void OnSuccess(LoginResult result)
     {
@@ -100,7 +100,7 @@ public class PlayfabManager : MonoBehaviour
 
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(sceneName);
     }
 

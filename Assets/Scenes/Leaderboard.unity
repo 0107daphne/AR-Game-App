@@ -916,9 +916,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9636d1e4a73c6844aa0ac81fa740631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  messageText: {fileID: 0}
+  emailInput: {fileID: 0}
+  passwordInput: {fileID: 0}
   rowPrefab: {fileID: 5374455175010536635, guid: 90ab01307e9c63c49981c44e71475d84,
     type: 3}
   rowsParent: {fileID: 343636261}
+  sceneName: 
 --- !u!4 &1252594370
 Transform:
   m_ObjectHideFlags: 0
@@ -1592,6 +1596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f087b9cac849353409a1465424fe3020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneName: 
 --- !u!4 &1804110657
 Transform:
   m_ObjectHideFlags: 0
