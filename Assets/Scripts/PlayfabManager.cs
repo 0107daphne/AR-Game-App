@@ -19,7 +19,15 @@ public class PlayfabManager : MonoBehaviour
     public GameObject rowPrefab;
     public Transform rowsParent;
 
-    [Header("Load Scene")]
+    // [Header("Windows")]
+    // public GameObject displayNameWindow;
+    // public GameObject leaderboardWindow;
+
+    // [Header("Display name Window")]
+    // public GameObject nameError;
+    // public TMP_InputField nameInput;
+
+    [Header("Load Scene")]                             
     public string sceneName;
 
     // void Start()
@@ -78,8 +86,12 @@ public class PlayfabManager : MonoBehaviour
     // {
     //     var request = new LoginWithCustomIDRequest
     //     {
-    //         CustomId = SystemInfo.deviceUniqueIdentifier,
-    //         CreateAccount = true
+    //         CustomId = "Tutorial",
+    //         CreateAccount = true,
+    //         InfoRequestParameters = new GetPlayerCombinedInforRequestParams
+    //         {
+    //             GetPlayerProfile = true
+    //         }
     //     };
     //     PlayFabClientAPI.LoginWithCustomID(request, OnSuccess, OnError);
     // }
@@ -87,9 +99,32 @@ public class PlayfabManager : MonoBehaviour
     void OnSuccess(LoginResult result)
     {
         messageText.text = "Logging in!";
-        Debug.Log("Successful login/account created");
+        //Debug.Log("Successful login/account created");
+        // string name = null;
+        // if(result.InfoResultPayload.PlayerProfile != null)
+        //     name = result.InfoResultPayload.PlayerProfile.DisplayName;
+        
+        // if(name == null)
+        //     displayNameWindow.SetActive(true);
+        // else
+        //     leaderboardWindow.SetActive(true);
+
         StartCoroutine(Wait());
     }
+
+    // public void SubmitNameButton()
+    // {
+    //     var request = new UpdateUserTitleDisplayNameRequest{
+    //         DisplayName = nameInput.text,
+    //     };
+    //     PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplayNameUpdate, OnError);
+    // }
+
+    // void OnDisplayNameUpdate(UpdateUserTitleDisplayNameResult result)
+    // {
+    //     Debug.Log("Updated display name!");
+    //     leaderboardWindow.SetActive(true);
+    // }
 
     void OnError(PlayFabError error)
     {
