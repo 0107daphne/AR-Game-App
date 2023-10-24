@@ -19,13 +19,14 @@ public class PlayfabManager : MonoBehaviour
     public GameObject rowPrefab;
     public Transform rowsParent;
 
-    // [Header("Windows")]
-    // public GameObject displayNameWindow;
-    // public GameObject leaderboardWindow;
+    [Header("Windows")]
+    public GameObject displayNameWindow;
+    public GameObject LoginWindow;
+    public GameObject leaderboardWindow;
 
-    // [Header("Display name Window")]
-    // public GameObject nameError;
-    // public TMP_InputField nameInput;
+    [Header("Display name Window")]
+    public GameObject nameError;
+    public TMP_InputField nameInput;
 
     [Header("Load Scene")]                             
     public string sceneName;
@@ -62,7 +63,11 @@ public class PlayfabManager : MonoBehaviour
         var request = new LoginWithEmailAddressRequest
         {
             Email=emailInput.text,
-            Password = passwordInput.text
+            Password = passwordInput.text,
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+            {
+                GetPlayerProfile = true
+            }
         };
         PlayFabClientAPI.LoginWithEmailAddress(request, OnSuccess, OnError);
     }
@@ -88,7 +93,7 @@ public class PlayfabManager : MonoBehaviour
     //     {
     //         CustomId = "Tutorial",
     //         CreateAccount = true,
-    //         InfoRequestParameters = new GetPlayerCombinedInforRequestParams
+    //         InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
     //         {
     //             GetPlayerProfile = true
     //         }
@@ -98,33 +103,32 @@ public class PlayfabManager : MonoBehaviour
 
     void OnSuccess(LoginResult result)
     {
+        LoginWindow.SetActive(false);
         messageText.text = "Logging in!";
-        //Debug.Log("Successful login/account created");
-        // string name = null;
-        // if(result.InfoResultPayload.PlayerProfile != null)
-        //     name = result.InfoResultPayload.PlayerProfile.DisplayName;
-        
-        // if(name == null)
-        //     displayNameWindow.SetActive(true);
-        // else
-        //     leaderboardWindow.SetActive(true);
 
-        StartCoroutine(Wait());
+        string name = null;
+        if(result.InfoResultPayload.PlayerProfile != null)
+            name = result.InfoResultPayload.PlayerProfile.DisplayName;
+        
+        if(name == null)
+            displayNameWindow.SetActive(true);
+        else
+            SceneManager.LoadScene("MainMenu");
     }
 
-    // public void SubmitNameButton()
-    // {
-    //     var request = new UpdateUserTitleDisplayNameRequest{
-    //         DisplayName = nameInput.text,
-    //     };
-    //     PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplayNameUpdate, OnError);
-    // }
+    public void SubmitNameButton()
+    {
+        var request = new UpdateUserTitleDisplayNameRequest{
+            DisplayName = nameInput.text,
+        };
+        PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplayNameUpdate, OnError);
+    }
 
-    // void OnDisplayNameUpdate(UpdateUserTitleDisplayNameResult result)
-    // {
-    //     Debug.Log("Updated display name!");
-    //     leaderboardWindow.SetActive(true);
-    // }
+    void OnDisplayNameUpdate(UpdateUserTitleDisplayNameResult result)
+    {
+        Debug.Log("Updated display name!");
+        StartCoroutine(Wait());
+    }
 
     void OnError(PlayFabError error)
     {
@@ -181,7 +185,7 @@ public class PlayfabManager : MonoBehaviour
             GameObject newGo = Instantiate(rowPrefab, rowsParent);
             TMP_Text[] texts = newGo.GetComponentsInChildren<TMP_Text>();
             texts[0].text = (item.Position+1).ToString();
-            texts[1].text = item.PlayFabId;
+            texts[1].text = item.DisplayName;
             texts[2].text = item.StatValue.ToString();
 
             Debug.Log(string.Format("Place: {0} | ID: {1} | Value: {2}",item.Position, item.PlayFabId, item.StatValue));
